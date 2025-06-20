@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: #050117;
+    text-align: center;
+}
+
+
+.titre{
+    position: relative;
+	padding: 7%;
+	background-color: #050117;
+	top: 15%;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+
+
+
+}
+
+
+.providdiv{
+	position: relative;
+	background-color: #050117;
+
+}
+.provid{
+	background-color: #050117;
+    border: none;
+
+}
+
+.bricolage{
+    position: relative;
+    background-color: #050117;
+
+}
+.callage{
+    background-color: #050117;
+    border: none;
+
+}
+
+
+.search{
+    position: relative;
+    background-color: #050117;
+	
+	display: flex;
+    justify-content: center;
+    width: 100%;
+
+}
+
+
+
+input[type=search] {
+    border: solid 1px #ccc;
+    padding: 12px 350px 12px 20px;
+    width: 55px;
+	
+}
+

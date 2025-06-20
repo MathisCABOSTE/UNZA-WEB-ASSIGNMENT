@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+	background-color: #222222;
+}
+
+.barhaut{
+	background-color: #050117;
+	border: 2px solid;
+	border-color: #050117 #050117 #dddddd;
+
+
+}
+.navbar{
+	background-color: #050117;
+}
+.form-inline{
+	background-color: #050117;
+}
+
+.lessites{
+	background-color: #222222;
+	height: 100%;
+	width: 100%;
+
+}
+
+
+.para{
+    color: #ffffff;
+    background-color: #222222;
+	padding: 3em;
+	margin-left: 10%;
+	margin-right: 40%;
+
+}
+
+
+.providdiv{
+    position: relative;
+    background-color: #050117;
+
+}
+.provid{
+    background-color: #050117;
+    border: none;
+
+}
+
+.search{
+    position: relative;
+    background-color: #050117;
+
+}
+
+.goback{
+    position: absolute;
+    background-color: #050117;
+	margin: -4em;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+
+}
+.gobacklogo{
+    background-color: #050117;
+    border: none;
+
+}
+.formgoback{
+	background-color: #050117;
+}
+
+.sbar{
+	background-color: #050117;
+
+}
+
+input[type=search] {
+    border: solid 1px #ccc;
+    padding: 12px 350px 12px 20px;
+    width: 55px;
+
+}
