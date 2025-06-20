@@ -60,9 +60,9 @@
     </div>
 
     
-    <footer class="text-center p-3 mt-4" style="background-color: #050117; color: #ffffff; font-family: 'Courier New', Courier, monospace;">
+    <!-- <footer class="text-center p-3 mt-4" style="background-color: #050117; color: #ffffff; font-family: 'Courier New', Courier, monospace;">
         <p>&copy; 2025 Providence. All rights reserved.</p>
-    </footer>
+    </footer> -->
 </body>
 
 </html>
