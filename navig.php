@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="navigstyle.css">
     <title>Providence</title>
-    <link rel="icon" type="image/png" href="icon_provid.png" />
+    <link rel="icon" type="image/png" href="./content/icon_provid.png" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="navigstyle.css">
 
     <script>
 
@@ -36,7 +36,7 @@
             <div class="goback">
                 <form method="POST" class="formgoback" action="index.php">
                     <button class="gobacklogo">
-                        <img src="logo_provid3.png" height="75">
+                        <img src="./content/logo_provid3.png" height="75">
                     </button>
                 </form>
             </div>
@@ -44,7 +44,7 @@
                 <form method="GET" class="form-inline" action="navig.php">
                     <div class="providdiv">
                         <button class="provid">
-                            <img src="providball.gif" height="200">
+                            <img src="./content/providball.gif" height="200">
                         </button>
                     </div>
                     <div class="sbar">
@@ -58,6 +58,11 @@
     <div class="lessites">
         <p class="para" id="para"></p>
     </div>
+
+    
+    <footer class="text-center p-3 mt-4" style="background-color: #050117; color: #ffffff; font-family: 'Courier New', Courier, monospace;">
+        <p>&copy; 2025 Providence. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>
