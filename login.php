@@ -32,7 +32,7 @@
             margin-bottom: 30px;
         }
 
-        .login-box input[type="email"],
+        .login-box input[type="username"],
         .login-box input[type="password"] {
             background-color: #fff;
             border: none;
@@ -59,7 +59,7 @@
         .top-left-home {
             position: absolute;
             top: 20px;
-            left: 20px;
+            left: 1px;
             z-index: 1000;
         }
     </style>
@@ -67,16 +67,16 @@
 <body>
     <div class="top-left-home">
         <a href="index.php">
-            <img src="./content/providball.gif" height="100" alt="Home">
+            <img src="./content/providball.gif" height="200" alt="Home">
         </a>
     </div>
 
 
     <form class="login-box" action="auth.php" method="POST">
         <img src="./content/logo_provid3.png" alt="Logo Providence">
-        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="username" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Se connecter</button>
+        <button type="submit">Connect</button>
     </form>
 
 </body>
