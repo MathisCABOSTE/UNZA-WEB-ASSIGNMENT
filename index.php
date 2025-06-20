@@ -17,6 +17,10 @@
 		<img src="./content/logo_provid3.png" height="200" class="logo">
 	</div>
 
+	<div class="top-right-login">
+    	<a href="login.php" class="btn btn-dark">Connection</a>
+	</div>
+
 	<nav class="navbar">
 		<div class="search">
 			<form method="GET" class="form-inline" action="navig.php">
