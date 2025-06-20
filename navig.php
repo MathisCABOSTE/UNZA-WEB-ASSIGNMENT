@@ -33,13 +33,13 @@
 
     <div class="barhaut">
         <nav class="navbar">
-            <div class="goback">
+            <!-- <div class="goback">
                 <form method="POST" class="formgoback" action="index.php">
                     <button class="gobacklogo">
                         <img src="./content/logo_provid3.png" height="75">
                     </button>
                 </form>
-            </div>
+            </div> -->
             <div class="search">
                 <form method="GET" class="form-inline" action="navig.php">
                     <div class="providdiv">
@@ -52,6 +52,17 @@
                     </div>
                 </form>
             </div>
+            <!-- <div class="top-right-home">
+    	        <a href="index.php" class="btn btn-dark">Home</a>
+	        </div>
+            <div class="top-right-login">
+    	        <a href="login.php" class="btn btn-dark">Connection</a>
+	        </div> -->
+            <div class="top-right-buttons">
+                <a href="index.php" class="btn btn-dark">Home</a>
+                <a href="login.php" class="btn btn-dark">Connection</a>
+            </div>
+
         </nav>
     </div>
 

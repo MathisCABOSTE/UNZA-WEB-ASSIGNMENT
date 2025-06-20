@@ -31,7 +31,6 @@
 				</div>
 				<div class="sbar">
 					<input class="form-control mr-sm-2" type="search" id="si" required="required" placeholder="Ask Provid to provide you" name="si" aria-label="Search">
-
 				</div>
 			</form>
 			<div class="stabilize">
