@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -18,7 +21,11 @@
 	</div>
 
 	<div class="top-right-login">
-    	<a href="login.php" class="btn btn-dark">Connection</a>
+		<?php if (isset($_SESSION['user_id'])): ?>
+			<a href="profile.php" class="btn btn-dark">Connected as @<?php echo htmlspecialchars($_SESSION['user_id']); ?></a>
+		<?php else: ?>
+			<a href="login.php" class="btn btn-dark">Log In</a>
+		<?php endif; ?>
 	</div>
 
 	<nav class="navbar">
