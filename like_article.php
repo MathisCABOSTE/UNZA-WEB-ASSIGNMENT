@@ -25,56 +25,32 @@ if ($article_id <= 0) {
 
 $user_id = $_SESSION['user_id'];
 
-// Check if already liked
-$stmt = $mysqli->prepare("SELECT 1 FROM likes WHERE user_id = ? AND article_id = ?");
-$stmt->bind_param("si", $user_id, $article_id);
-$stmt->execute();
-$stmt->store_result();
-
-if ($stmt->num_rows > 0) {
-    // Unlike: remove like and decrement count
-    $stmt->close();
-    $delete = $mysqli->prepare("DELETE FROM likes WHERE user_id = ? AND article_id = ?");
-    $delete->bind_param("si", $user_id, $article_id);
-    $delete->execute();
-    $delete->close();
-
-    $update = $mysqli->prepare("UPDATE articles SET likes = GREATEST(likes - 1, 0) WHERE article_id = ?");
-    $update->bind_param("i", $article_id);
-    $update->execute();
-    $update->close();
-
-    $like_stmt = $mysqli->prepare("SELECT likes FROM articles WHERE article_id = ?");
-    $like_stmt->bind_param("i", $article_id);
-    $like_stmt->execute();
-    $like_stmt->bind_result($likes);
-    $like_stmt->fetch();
-    $like_stmt->close();
-
-    echo json_encode(['success' => true, 'liked' => false, 'likes' => $likes, 'message' => 'Like removed']);
-    $mysqli->close();
-    exit();
+// Toggle like
+if (!isset($_SESSION['liked_articles'])) {
+    $_SESSION['liked_articles'] = [];
 }
-$stmt->close();
+$liked = isset($_SESSION['liked_articles'][$article_id]) && $_SESSION['liked_articles'][$article_id] === true;
 
-// Like: insert like and increment count
-$insert = $mysqli->prepare("INSERT INTO likes (user_id, article_id) VALUES (?, ?)");
-$insert->bind_param("si", $user_id, $article_id);
-$insert->execute();
-$insert->close();
+if ($liked) {
+    // Unlike
+    $_SESSION['liked_articles'][$article_id] = false;
+    $mysqli->query("UPDATE articles SET likes = likes - 1 WHERE article_id = $article_id");
+    $liked = false;
+} else {
+    // Like
+    $_SESSION['liked_articles'][$article_id] = true;
+    $mysqli->query("UPDATE articles SET likes = likes + 1 WHERE article_id = $article_id");
+    $liked = true;
+}
 
-$update = $mysqli->prepare("UPDATE articles SET likes = likes + 1 WHERE article_id = ?");
-$update->bind_param("i", $article_id);
-$update->execute();
-$update->close();
+// Get new like count
+$result = $mysqli->query("SELECT likes FROM articles WHERE article_id = $article_id");
+$row = $result->fetch_assoc();
 
-$like_stmt = $mysqli->prepare("SELECT likes FROM articles WHERE article_id = ?");
-$like_stmt->bind_param("i", $article_id);
-$like_stmt->execute();
-$like_stmt->bind_result($likes);
-$like_stmt->fetch();
-$like_stmt->close();
-
-echo json_encode(['success' => true, 'liked' => true, 'likes' => $likes, 'message' => 'Article liked']);
+echo json_encode([
+    'success' => true,
+    'likes' => $row['likes'],
+    'liked' => $liked
+]);
 $mysqli->close();
 ?>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Connect to the database
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
 if ($mysqli->connect_errno) {
@@ -29,6 +30,9 @@ if ($stmt->num_rows === 0) {
 
 $stmt->bind_result($title, $author, $datetime, $content);
 $stmt->fetch();
+
+// Check if user has liked this article (session-based demo)
+$liked = isset($_SESSION['liked_articles'][$article_id]) && $_SESSION['liked_articles'][$article_id] === true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,6 +93,33 @@ $stmt->fetch();
             color: #66b2ff;
             text-decoration: none;
         }
+        .heart {
+            font-size: 1.5rem;
+            color: #ff4d6d;
+            vertical-align: middle;
+            transition: color 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .heart.liked {
+            color: #ff0033;
+        }
+        .like-card {
+            display: inline-flex;
+            align-items: center;
+            background: #18152b;
+            border-radius: 8px;
+            padding: 8px 18px 8px 12px;
+            box-shadow: 0 2px 8px rgba(102,178,255,0.08);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 130px;
+            width: 100%;
+            gap: 10px;
+        }
+        .like-card .heart {
+            margin-right: 7px;
+        }
         @media (max-width: 800px) {
             .article-box {
                 padding: 25px 10px;
@@ -105,22 +136,26 @@ $stmt->fetch();
         <div class="article-content">
             <?php echo nl2br(htmlspecialchars($content)); ?>
         </div>
-        <div style="margin-bottom: 1.5rem;">
-            <button id="like-btn" class="back-link" style="margin-right:10px;">👍 Like</button>
-            <span id="like-count"><?php
-                // Get like count
-                $like_stmt = $mysqli->prepare("SELECT likes FROM articles WHERE article_id = ?");
-                $like_stmt->bind_param("i", $article_id);
-                $like_stmt->execute();
-                $like_stmt->bind_result($likes);
-                $like_stmt->fetch();
-                echo $likes;
-                $like_stmt->close();
-            ?></span> Likes
+        <div class="like-card">
+            <button id="like-card-btn" style="background:none;border:none;padding:0;outline:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;">
+                <span class="heart<?php echo $liked ? ' liked' : ''; ?>">
+                    <?php echo $liked ? '♥' : '♡'; ?>
+                </span>
+                <span id="like-count" style="color:#fff;"><?php
+                    // Get like count
+                    $like_stmt = $mysqli->prepare("SELECT likes FROM articles WHERE article_id = ?");
+                    $like_stmt->bind_param("i", $article_id);
+                    $like_stmt->execute();
+                    $like_stmt->bind_result($likes);
+                    $like_stmt->fetch();
+                    echo $likes;
+                    $like_stmt->close();
+                ?></span> <span style="color:#fff;">Likes</span>
+            </button>
         </div>
         <a href="javascript:history.back()" class="back-link">← Back</a>
         <script>
-        document.getElementById('like-btn').onclick = function() {
+        document.getElementById('like-card-btn').onclick = function() {
             fetch('like_article.php?id=<?php echo $article_id; ?>', {method: 'POST'})
             .then(response => response.json())
             .then(data => {
@@ -128,10 +163,20 @@ $stmt->fetch();
                     window.location.href = 'login.php';
                 } else if(data.success) {
                     document.getElementById('like-count').textContent = data.likes;
+                    // Toggle heart icon
+                    const heart = document.querySelector('#like-card-btn .heart');
+                    if(data.liked) {
+                        heart.textContent = '♥';
+                        heart.classList.add('liked');
+                    } else {
+                        heart.textContent = '♡';
+                        heart.classList.remove('liked');
+                    }
                 } else {
                     alert(data.message || "Error liking article.");
                 }
             });
+            return false;
         };
         </script>
     </div>
