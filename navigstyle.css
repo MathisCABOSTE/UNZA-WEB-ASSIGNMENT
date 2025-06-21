@@ -112,6 +112,7 @@
     background-color: #09032a;
     border: 1px solid #ccc;
     min-width: 180px;
+    z-index: 1050;
 }
 
 .custom-dropdown .dropdown-item {
@@ -143,7 +144,7 @@ input[type=search] {
     position: absolute;
     top: 250px;
     right: 40px;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .create-article-btn .btn-primary {
