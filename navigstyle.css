@@ -108,6 +108,23 @@
     text-align: center;
 }
 
+.custom-dropdown {
+    background-color: #09032a;
+    border: 1px solid #ccc;
+    min-width: 180px;
+}
+
+.custom-dropdown .dropdown-item {
+    color: #fff;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+}
+
+.custom-dropdown .dropdown-item:hover {
+    background-color: #1a1439;
+    color: #66b2ff;
+}
+
 
 
 .sbar{

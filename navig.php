@@ -66,13 +66,33 @@ session_start();
             <div class="top-right-buttons">
                 <a href="index.php" class="btn btn-dark">Home</a>
                 <div>
-		<?php if (isset($_SESSION['user_id'])): ?>
-			<a href="profile.php" class="btn btn-dark">Account</a>
-		<?php else: ?>
-			<a href="login.php" class="btn btn-dark">Log In</a>
-		<?php endif; ?>
-        </div>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="profile.php" class="btn btn-dark">Account</a>
+                    <?php else: ?>
+                        <a href="login.php" class="btn btn-dark">Log In</a>
+                    <?php endif; ?>
+                </div>
             </div>
+
+            <div class="top-right-buttons">
+                <a href="index.php" class="btn btn-dark mb-2">Home</a>
+                                
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</button>
+                        <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="my_articles.php">My Articles</a>
+                            <a class="dropdown-item" href="liked_articles.php">Liked Articles</a>
+                            <a class="dropdown-item" href="account_settings.php">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="logout.php">Deconnection</a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <a href="login.php" class="btn btn-dark">Log In</a>
+                <?php endif; ?>
+            </div>
+
 
         </nav>
     </div>
@@ -81,10 +101,9 @@ session_start();
         <p class="para" id="para"></p>
     </div>
 
-    
-    <!-- <footer class="text-center p-3 mt-4" style="background-color: #050117; color: #ffffff; font-family: 'Courier New', Courier, monospace;">
-        <p>&copy; 2025 Providence. All rights reserved.</p>
-    </footer> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

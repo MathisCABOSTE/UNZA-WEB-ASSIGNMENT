@@ -19,13 +19,23 @@ session_start();
 		<img src="./content/logo_provid3.png" height="200" class="logo">
 	</div>
 
-	<div class="top-right-login">
-		<?php if (isset($_SESSION['user_id'])): ?>
-			<a href="profile.php" class="btn btn-dark">Connected as @<?php echo htmlspecialchars($_SESSION['user_id']); ?></a>
-		<?php else: ?>
-			<a href="login.php" class="btn btn-dark">Log In</a>
-		<?php endif; ?>
+	<div class="top-right-login dropdown">
+	    <?php if (isset($_SESSION['user_id'])): ?>
+	        <button class="btn btn-dark dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	            Connected as @<?php echo htmlspecialchars($_SESSION['user_id']); ?>
+	        </button>
+	        <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="userDropdown">
+	            <a class="dropdown-item" href="my_articles.php">My Articles</a>
+	            <a class="dropdown-item" href="liked_articles.php">Liked Articles</a>
+	            <a class="dropdown-item" href="account_settings.php">Settings</a>
+	            <div class="dropdown-divider"></div>
+	            <a class="dropdown-item text-danger" href="logout.php">Deconnection</a>
+	        </div>
+	    <?php else: ?>
+	        <a href="login.php" class="btn btn-dark">Log In</a>
+	    <?php endif; ?>
 	</div>
+
 
 	<nav class="navbar">
 		<div class="search">
@@ -47,7 +57,9 @@ session_start();
 		</div>
 	</nav>
 
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
