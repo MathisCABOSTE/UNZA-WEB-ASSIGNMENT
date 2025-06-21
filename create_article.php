@@ -100,17 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       left: 20px;
       z-index: 1000;
     }
+    .top-left-home .btn-dark {
+      background-color: #09032a;
+      border-color: #ccc;
+      padding: 8px 16px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <div class="top-left-home">
-    <a href="index.php">
-      <img src="./content/providball.gif" height="200" alt="Home">
-    </a>
+    <a href="index.php" class="btn btn-dark">Home</a>
   </div>
   <div class="article-box">
     <img src="./content/logo_provid3.png" alt="Logo Providence">
-    <h2 class="mb-4">Create Article</h2>
+    <h2 class="fw-bold mb-3" style="color: #f1f1f1;">Create Article :</h2>
     <?php if ($message) echo $message; ?>
     <form method="post" action="create_article.php">
       <div class="mb-3 text-start">

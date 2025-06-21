@@ -138,3 +138,24 @@ input[type=search] {
     width: 55px;
 
 }
+
+.create-article-btn {
+    position: absolute;
+    top: 250px;
+    right: 40px;
+    z-index: 1000;
+}
+
+.create-article-btn .btn-primary {
+    background-color: #343a40;
+    border-color: #ccc;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+.create-article-btn .btn-primary:hover {
+    background-color: #495057;
+    color: #fff;
+}
+

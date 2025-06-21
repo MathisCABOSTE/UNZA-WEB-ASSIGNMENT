@@ -97,6 +97,10 @@ session_start();
         </nav>
     </div>
 
+    <div class="create-article-btn">
+        <a href="create_article.php" class="btn btn-primary">Create New Article</a>
+    </div>
+
     <div class="lessites">
         <p class="para" id="para"></p>
     </div>
