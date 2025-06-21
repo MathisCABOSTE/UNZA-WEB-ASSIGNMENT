@@ -31,8 +31,17 @@ if ($stmt->num_rows === 0) {
 $stmt->bind_result($title, $author, $datetime, $content);
 $stmt->fetch();
 
-// Check if user has liked this article (session-based demo)
-$liked = isset($_SESSION['liked_articles'][$article_id]) && $_SESSION['liked_articles'][$article_id] === true;
+// Check if user is logged in
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+$liked = false;
+if ($user_id) {
+    $like_check_stmt = $mysqli->prepare("SELECT 1 FROM likes WHERE user_id = ? AND article_id = ?");
+    $like_check_stmt->bind_param("si", $user_id, $article_id);
+    $like_check_stmt->execute();
+    $like_check_stmt->store_result();
+    $liked = $like_check_stmt->num_rows > 0;
+    $like_check_stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

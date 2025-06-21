@@ -1,45 +1,40 @@
 <?php
-header('Content-Type: application/json');
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode([
-        'success' => false,
-        'login_required' => true,
-        'message' => 'You must be logged in to like articles.'
-    ]);
-    exit();
-}
-
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
-if ($mysqli->connect_errno) {
-    echo json_encode(['success' => false, 'message' => 'DB error']);
-    exit();
-}
 
 $article_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($article_id <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Invalid article ID']);
-    exit();
-}
 
 $user_id = $_SESSION['user_id'];
 
 // Toggle like
-if (!isset($_SESSION['liked_articles'])) {
-    $_SESSION['liked_articles'] = [];
+$liked = false;
+if ($user_id) {
+    $like_check_stmt = $mysqli->prepare("SELECT 1 FROM likes WHERE user_id = ? AND article_id = ?");
+    $like_check_stmt->bind_param("si", $user_id, $article_id);
+    $like_check_stmt->execute();
+    $like_check_stmt->store_result();
+    $liked = $like_check_stmt->num_rows > 0;
+    $like_check_stmt->close();
 }
-$liked = isset($_SESSION['liked_articles'][$article_id]) && $_SESSION['liked_articles'][$article_id] === true;
 
 if ($liked) {
     // Unlike
-    $_SESSION['liked_articles'][$article_id] = false;
     $mysqli->query("UPDATE articles SET likes = likes - 1 WHERE article_id = $article_id");
+    // Remove like from likes table
+    $stmt = $mysqli->prepare("DELETE FROM likes WHERE user_id = ? AND article_id = ?");
+    $stmt->bind_param("si", $user_id, $article_id);
+    $stmt->execute();
+    $stmt->close();
     $liked = false;
 } else {
     // Like
-    $_SESSION['liked_articles'][$article_id] = true;
-    $mysqli->query("UPDATE articles SET likes = likes + 1 WHERE article_id = $article_id");
+    $stmt = $mysqli->query("UPDATE articles SET likes = likes + 1 WHERE article_id = $article_id");
+    // Add like to likes table
+    $stmt = $mysqli->prepare("INSERT INTO likes (user_id, article_id) VALUES (?, ?)");
+    $stmt->bind_param("si", $user_id, $article_id);
+    $stmt->execute();
+    $stmt->close();
     $liked = true;
 }
 
