@@ -11,7 +11,7 @@ session_start();
   <link rel="icon" type="image/png" href="./content/icon_provid.png" />
   <style>
     body {
-      background-color: #050117;
+      background-color: #06021c;
       height: 100vh;
       margin: 0;
       display: flex;
@@ -25,9 +25,10 @@ session_start();
       border-radius: 10px;
       text-align: center;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
       color: #fff;
+      height: 500px;
     }
     .profile-box img {
       max-width: 100%;
@@ -54,26 +55,34 @@ session_start();
       left: 20px;
       z-index: 1000;
     }
+    .top-left-home .btn-dark {
+      background-color: #09032a;
+      border-color: #ccc;
+      padding: 8px 16px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <div class="top-left-home">
-    <a href="index.php">
-      <img src="./content/providball.gif" height="200" alt="Home">
-    </a>
+    <a href="index.php" class="btn btn-dark">Home</a>
   </div>
   <div class="profile-box">
     <img src="./content/logo_provid3.png" alt="Logo Providence">
     <?php if (isset($_SESSION['user_id'])): ?>
-      <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?>!</h2>
+      <h2 class="fw-bold mb-3" style="color: #66b2ff;">👋 Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?>!</h2>
     <?php else:
       header("Location: login.php");
       exit();
     endif; ?>
-    <p class="mt-4 mb-4">Manage your profile settings below.</p>
-    <a href="edit_username.php" class="btn btn-primary me-2 mb-2">Edit Username</a>
-    <a href="edit_password.php" class="btn btn-primary me-2 mb-2">Edit Password</a>
-    <a href="logout.php" class="btn btn-danger mb-2">Disconnect</a>
+    <p class="lead text-light mb-4" style="opacity: 0.8;">Customize your account settings using the tools below.</p>
+
+    <div class="button-group d-flex flex-column align-items-center gap-3 mt-4">
+      <a href="edit_username.php" class="btn btn-primary w-100">Edit Username</a>
+      <a href="edit_password.php" class="btn btn-primary w-100">Edit Password</a>
+      <a href="logout.php" class="btn btn-danger w-100">Disconnect</a>
+    </div>
+
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

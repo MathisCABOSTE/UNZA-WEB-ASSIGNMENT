@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #050117;
+            background-color: #06021c;
             height: 100vh;
             margin: 0;
             display: flex;
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: center;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
         .signin-box img {
             max-width: 100%;
@@ -119,23 +119,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .signin-box button:hover {
             background-color: #495057;
         }
+        .error-message {
+            color: #ff4d4d;
+            margin-bottom: 15px;
+        }
+
         .top-left-home {
             position: absolute;
             top: 20px;
             left: 20px;
             z-index: 1000;
         }
-        .error-message {
-            color: #ff4d4d;
-            margin-bottom: 15px;
+        .top-left-home .btn-dark {
+            background-color: #09032a;
+            border-color: #ccc;
+            padding: 8px 16px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="top-left-home">
-        <a href="index.php">
-            <img src="./content/providball.gif" height="100" alt="Home">
-        </a>
+        <a href="index.php" class="btn btn-dark">Home</a>
     </div>
 
     <form class="signin-box" action="signin.php" method="POST">

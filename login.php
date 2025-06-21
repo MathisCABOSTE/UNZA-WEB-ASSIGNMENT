@@ -64,7 +64,7 @@ $conn->close();
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #050117;
+            background-color: #06021c;
             height: 100vh;
             margin: 0;
             display: flex;
@@ -80,7 +80,7 @@ $conn->close();
             text-align: center;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
         .login-box img {
@@ -119,19 +119,29 @@ $conn->close();
             left: 20px;
             z-index: 1000;
         }
+        .top-left-home .btn-dark {
+            background-color: #09032a;
+            border-color: #ccc;
+            padding: 8px 16px;
+            font-weight: bold;
+        }
 
         .error-message {
             color: #ff4d4d;
             margin-bottom: 15px;
         }
 
+        .login-box a:hover {
+            color: #3399ff;
+            text-decoration: underline;
+        }
+
+
     </style>
 </head>
 <body>
     <div class="top-left-home">
-        <a href="index.php">
-            <img src="./content/providball.gif" height="200" alt="Home">
-        </a>
+        <a href="index.php" class="btn btn-dark">Home</a>
     </div>
 
 
@@ -139,7 +149,14 @@ $conn->close();
         <img src="./content/logo_provid3.png" alt="Logo Providence">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Se connecter</button>
+
+        <p style="margin-bottom: 20px; text-align: left;">
+            <a href="signin.php" style="color: #66b2ff; text-decoration: none; font-size: 0.9rem;">
+                Create an account
+            </a>
+        </p>
+
+        <button type="submit">Login</button>
         <?php if (!empty($error)): ?>
             <div class="error-message"><?php echo $error; ?></div>
         <?php endif; ?>
