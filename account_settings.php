@@ -2,6 +2,10 @@
 <html lang="en">
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit();
+}
 ?>
 <head>
   <meta charset="UTF-8" />
@@ -70,7 +74,7 @@ session_start();
   <div class="profile-box">
     <img src="./content/logo_provid3.png" alt="Logo Providence">
     <?php if (isset($_SESSION['user_id'])): ?>
-      <h2 class="fw-bold mb-3" style="color: #66b2ff;">👋 Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?>!</h2>
+      <h2 class="fw-bold mb-3" style="color: #66b2ff;">Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?>!</h2>
     <?php else:
       header("Location: login.php");
       exit();
