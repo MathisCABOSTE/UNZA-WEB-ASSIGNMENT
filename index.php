@@ -1,9 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 session_start();
 ?>
-<!DOCTYPE html>
-<html>
-
 <head>
 	<meta charset="utf-8">
 	<title>Providence</title>

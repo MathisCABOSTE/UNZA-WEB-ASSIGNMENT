@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 // Start session
 session_start();
@@ -55,8 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Close connection
 $conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Connexion - Providence</title>
@@ -124,7 +124,7 @@ $conn->close();
             color: #ff4d4d;
             margin-bottom: 15px;
         }
-        
+
     </style>
 </head>
 <body>

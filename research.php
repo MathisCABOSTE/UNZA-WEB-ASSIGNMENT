@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 
     $db = new mysqli("localhost", "providence", "bb1wy", "Providence");
@@ -46,3 +48,4 @@
 
     }
 ?>
+</html>
