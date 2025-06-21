@@ -1,51 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
+// Connect to the database
+$mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
+if ($mysqli->connect_errno) {
+    http_response_code(500);
+    echo "Database connection failed.";
+    exit();
+}
 
-    $db = new mysqli("localhost", "providence", "bb1wy", "Providence");
+// Get the search input
+$search = isset($_GET['si']) ? trim($_GET['si']) : '';
+if ($search === '') {
+    echo "Please enter a search term.";
+    exit();
+}
 
-    // Récupération des paramètres dans l'url
+// Prepare and execute the query
+$stmt = $mysqli->prepare("SELECT article_id, title, author, content FROM articles WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%') ORDER BY datetime DESC LIMIT 10");
+$stmt->bind_param("ss", $search, $search);
+$stmt->execute();
+$stmt->store_result();
 
-    if (isset($_GET["si"])) {
-        $search = htmlspecialchars($_GET['si']);
-        $search_array = explode(" ",$search);
-        $search_string = "";
+if ($stmt->num_rows === 0) {
+    echo "No articles found.";
+    $stmt->close();
+    $mysqli->close();
+    exit();
+}
 
-        // Ajout de chaque mot dans la recherche
-        foreach ($search_array as $word){
-            $search_string = $search_string . " OR name LIKE '%$word%' OR description LIKE '%$word%'";
-        }
+// Add this line to show the number of results and the search term
+echo "Provid provided you {$stmt->num_rows} results for search '" . htmlspecialchars($search) . "'<br><br>";
 
-        /* $order = "ORDER BY case ";
-        $relevance = 0;
-        foreach ($search_array as $word){
-            $order = $order . 
-        "WHEN name LIKE '$word%' THEN $c
-        WHEN name LIKE '%$word%' THEN 2
-        WHEN a.title LIKE '%somthing' THEN 3
-        ELSE 4 END;"
-        }*/
+$stmt->bind_result($article_id, $title, $author, $content);
 
-        // Création de la requête SQL
-        $query = "SELECT url, name, description FROM website WHERE name LIKE '% $search %' $search_string";
+// Output results as clickable cards
+while ($stmt->fetch()) {
+    $preview = htmlspecialchars(mb_substr($content, 0, 120)) . (mb_strlen($content) > 120 ? "..." : "");
+    echo "<a href='article.php?id=" . urlencode($article_id) . "' style='text-decoration:none;color:inherit;'>";
+    echo "<div class='card mb-3' style='cursor:pointer;'>";
+    echo "  <div class='card-body'>";
+    echo "    <h2 class='card-title' style='font-size:2rem;'>" . htmlspecialchars($title) . "</h2>"; // Changed from h5 to h2 and increased font size
+    echo "    <h6 class='card-subtitle mb-2 text-muted'>By <b>" . htmlspecialchars($author) . "</b></h6>";
+    echo "    <p class='card-text'>" . $preview . "</p>";
+    echo "  </div>";
+    echo "</div>";
+    echo "</a>";
+}
 
-        $result = $db->query($query);
-        $rows = $result->fetch_all();
-
-        $number = sizeof($rows);
-
-        // Affichage du code html résultant de la requête
-        if ($number == 1){
-            echo "<h4> Provid provided you $number result </h4> <br><br>";
-        } else {
-            echo "<h4> Provid provided you $number results </h4> <br><br>";
-        }
-        foreach ($rows as $row){
-            echo "<p> $row[0] ";
-            echo "<h4><a href='/websites/$row[0]'>$row[1]</a></h4>";
-            echo "$row[2]</p> <br><br><br>";
-        }
-
-    }
+$stmt->close();
+$mysqli->close();
 ?>
-</html>
+<style>
+.card.mb-3 {
+    transition: background-color 0.2s;
+}
+.card.mb-3:hover {
+    background-color: #f8f9fa;
+}
+</style>
