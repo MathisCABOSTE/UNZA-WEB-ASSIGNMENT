@@ -15,7 +15,7 @@ if ($search === '') {
 }
 
 // Prepare and execute the query
-$stmt = $mysqli->prepare("SELECT article_id, title, author, content FROM articles WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%') ORDER BY datetime DESC LIMIT 10");
+$stmt = $mysqli->prepare("SELECT article_id, title, author, content, likes, datetime FROM articles WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%') ORDER BY datetime DESC LIMIT 10");
 $stmt->bind_param("ss", $search, $search);
 $stmt->execute();
 $stmt->store_result();
@@ -27,20 +27,54 @@ if ($stmt->num_rows === 0) {
     exit();
 }
 
-// Add this line to show the number of results and the search term
 echo "Provid provided you {$stmt->num_rows} results for search '" . htmlspecialchars($search) . "'<br><br>";
 
-$stmt->bind_result($article_id, $title, $author, $content);
+// Add datetime to bind_result
+$stmt->bind_result($article_id, $title, $author, $content, $likes, $datetime);
+
+// Helper function for "time ago"
+function timeAgo($datetime) {
+    $timestamp = strtotime($datetime);
+    $diff = time() - $timestamp + 60 * 60 * 2; // Adjust for timezone difference (2 hours)
+
+    if ($diff < 60) {
+        $unit = ($diff == 1) ? "second" : "seconds";
+        return $diff . " $unit ago";
+    }
+    $diff = round($diff / 60);
+    if ($diff < 60) {
+        $unit = ($diff == 1) ? "minute" : "minutes";
+        return $diff . " $unit ago";
+    }
+    $diff = round($diff / 60);
+    if ($diff < 24) {
+        $unit = ($diff == 1) ? "hour" : "hours";
+        return $diff . " $unit ago";
+    }
+    $diff = round($diff / 24);
+    if ($diff < 7) {
+        $unit = ($diff == 1) ? "day" : "days";
+        return $diff . " $unit ago";
+    }
+    $diff = round($diff / 7);
+    if ($diff < 4) {
+        $unit = ($diff == 1) ? "week" : "weeks";
+        return $diff . " $unit ago";
+    }
+    return date("M d, Y", $timestamp);
+}
 
 // Output results as clickable cards
 while ($stmt->fetch()) {
     $preview = htmlspecialchars(mb_substr($content, 0, 120)) . (mb_strlen($content) > 120 ? "..." : "");
+    $ago = timeAgo($datetime);
     echo "<a href='article.php?id=" . urlencode($article_id) . "' style='text-decoration:none;color:inherit;'>";
     echo "<div class='card mb-3' style='cursor:pointer;'>";
     echo "  <div class='card-body'>";
-    echo "    <h2 class='card-title' style='font-size:2rem;'>" . htmlspecialchars($title) . "</h2>"; // Changed from h5 to h2 and increased font size
-    echo "    <h6 class='card-subtitle mb-2 text-muted'>By <b>" . htmlspecialchars($author) . "</b></h6>";
+    echo "    <h2 class='card-title' style='font-size:2rem;'>" . htmlspecialchars($title) . "</h2>";
+    echo "    <h6 class='card-subtitle mb-2 text-muted'>By <b>" . htmlspecialchars($author) . "</b> &middot; <span style='font-weight:normal;'>$ago</span></h6>";
     echo "    <p class='card-text'>" . $preview . "</p>";
+    echo "    <span class='badge bg-primary'>Likes: " . htmlspecialchars($likes) . "</span>";
     echo "  </div>";
     echo "</div>";
     echo "</a>";
