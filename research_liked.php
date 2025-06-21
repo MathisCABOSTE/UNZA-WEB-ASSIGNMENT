@@ -53,7 +53,7 @@ $stmt->bind_result($article_id, $title, $author, $content, $likes, $datetime);
 // Helper function for "time ago"
 function timeAgo($datetime) {
     $timestamp = strtotime($datetime);
-    $diff = time() - $timestamp + 60 * 60 * 2; // Adjust for timezone difference (2 hours)
+    $diff = time() - $timestamp;
 
     if ($diff < 60) {
         $unit = ($diff == 1) ? "second" : "seconds";
