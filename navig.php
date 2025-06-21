@@ -67,7 +67,7 @@ session_start();
                 <a href="index.php" class="btn btn-dark">Home</a>
                 <div>
 		<?php if (isset($_SESSION['user_id'])): ?>
-			<a href="profile.php" class="btn btn-dark">@<?php echo htmlspecialchars($_SESSION['user_id']); ?></a>
+			<a href="profile.php" class="btn btn-dark">Account</a>
 		<?php else: ?>
 			<a href="login.php" class="btn btn-dark">Log In</a>
 		<?php endif; ?>
