@@ -55,19 +55,22 @@ if ($user_id) {
             background-color: #06021c;
             min-height: 100vh;
             margin: 0;
-            display: flex;
+            /* display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; */
             font-family: Arial, sans-serif;
+            padding: 30px;
+            display: block;
         }
         .article-box {
+            margin: 0 auto;
             background-color: #050117;
             padding: 40px 40px 30px 40px;
             border-radius: 10px;
             text-align: left;
             width: 100%;
-            max-width: 700px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            max-width: 850px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             color: #fff;
         }
         .article-title {
