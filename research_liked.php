@@ -92,7 +92,7 @@ while ($stmt->fetch()) {
     echo "    <h2 class='card-title' style='font-size:2rem;'>" . htmlspecialchars($title) . "</h2>";
     echo "    <h6 class='card-subtitle mb-2 text-muted'>By <b>" . htmlspecialchars($author) . "</b> &middot; <span style='font-weight:normal;'>$ago</span></h6>";
     echo "    <p class='card-text'>" . $preview . "</p>";
-    echo "    <span class='badge bg-primary'>Likes: " . htmlspecialchars($likes) . "</span>";
+    echo "    <span class='badge bg-dark'>Likes: " . htmlspecialchars($likes) . "</span>";
     echo "  </div>";
     echo "</div>";
     echo "</a>";
