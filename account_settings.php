@@ -84,7 +84,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="button-group d-flex flex-column align-items-center gap-3 mt-4">
       <a href="my_articles.php" class="btn btn-primary w-100">My Articles</a>
       <a href="liked_articles.php" class="btn btn-primary w-100">Liked Articles</a>
-      <a href="edit_password.php" class="btn btn-primary w-100">Edit Password</a>
+      <a href="edit_password.php" class="btn btn-dark w-100">Edit Password</a>
       <a href="logout.php" class="btn btn-danger w-100">Disconnect</a>
     </div>
 
