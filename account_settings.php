@@ -32,7 +32,7 @@ if (!isset($_SESSION['user_id'])) {
       max-width: 500px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
       color: #fff;
-      height: 500px;
+      height: 550px;
     }
     .profile-box img {
       max-width: 100%;
@@ -82,7 +82,8 @@ if (!isset($_SESSION['user_id'])) {
     <p class="lead text-light mb-4" style="opacity: 0.8;">Customize your account settings using the tools below.</p>
 
     <div class="button-group d-flex flex-column align-items-center gap-3 mt-4">
-      <a href="edit_username.php" class="btn btn-primary w-100">Edit Username</a>
+      <a href="my_articles.php" class="btn btn-primary w-100">My Articles</a>
+      <a href="liked_articles.php" class="btn btn-primary w-100">Liked Articles</a>
       <a href="edit_password.php" class="btn btn-primary w-100">Edit Password</a>
       <a href="logout.php" class="btn btn-danger w-100">Disconnect</a>
     </div>
