@@ -49,64 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/png" href="./content/icon_provid.png" />
-  <style>
-    body {
-      background-color: #050117;
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-    }
-    .article-box {
-      background-color: #050117;
-      padding: 40px;
-      border-radius: 10px;
-      text-align: center;
-      width: 100%;
-      max-width: 600px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      color: #fff;
-    }
-    .article-box img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 30px;
-    }
-    .article-box .form-control,
-    .article-box textarea {
-      background-color: #18122b;
-      color: #fff;
-      border: 1px solid #343a40;
-      margin-bottom: 20px;
-    }
-    .article-box .form-control:focus,
-    .article-box textarea:focus {
-      background-color: #23203a;
-      color: #fff;
-      border-color: #495057;
-    }
-    .article-box .btn-primary {
-      background-color: #343a40;
-      border: none;
-    }
-    .article-box .btn-primary:hover {
-      background-color: #495057;
-    }
-    .top-left-home {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-    }
-    .top-left-home .btn-dark {
-      background-color: #09032a;
-      border-color: #ccc;
-      padding: 8px 16px;
-      font-weight: bold;
-    }
-  </style>
+    <link rel="stylesheet" href="genrstyle.css">
 </head>
 <body>
   <div class="top-left-home">

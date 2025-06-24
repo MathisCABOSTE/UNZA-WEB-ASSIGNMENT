@@ -73,70 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Inscription - Providence</title>
     <link rel="icon" type="image/png" href="./content/icon_provid.png" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #06021c;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-        }
-        .signin-box {
-            background-color: #050117;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-        .signin-box img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 30px;
-        }
-        .signin-box input[type="text"],
-        .signin-box input[type="email"],
-        .signin-box input[type="password"] {
-            background-color: #fff;
-            border: none;
-            padding: 12px;
-            margin-bottom: 20px;
-            width: 100%;
-            border-radius: 5px;
-        }
-        .signin-box button {
-            background-color: #343a40;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .signin-box button:hover {
-            background-color: #495057;
-        }
-        .error-message {
-            color: #ff4d4d;
-            margin-bottom: 15px;
-        }
-
-        .top-left-home {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-        .top-left-home .btn-dark {
-            background-color: #09032a;
-            border-color: #ccc;
-            padding: 8px 16px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="genrstyle.css">
 </head>
 <body>
     <div class="top-left-home">
