@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Passwords not matching.";
     } else {
         // Check if username already exists
-        $check = $conn->prepare("SELECT user_id FROM users WHERE user_id = ?");
+        $check = $conn->prepare("SELECT LOWER(user_id) FROM users WHERE user_id = LOWER(?)");
         $check->bind_param("s", $username);
         $check->execute();
         $check->store_result();
