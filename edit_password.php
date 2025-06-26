@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -6,12 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$host = 'localhost';
-$user = 'providence';
-$password = 'bb1wy';
-$database = 'Providence';
-
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

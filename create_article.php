@@ -1,18 +1,14 @@
 <?php
+require_once 'config.php';
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit();
 }
 
-// Database connection parameters
-$host = 'localhost';
-$user = 'providence';
-$password = 'bb1wy';
-$dbname = 'Providence';
-
 // Connect to MySQL
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 
 $message = '';
 

@@ -1,6 +1,8 @@
 <?php
+require_once 'config.php';
+
 // Connect to the database
-$mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
+$mysqli = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 if ($mysqli->connect_errno) {
     http_response_code(500);
     echo "Database connection failed.";

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+require_once 'config.php';
+
 // Start session
 session_start();
 
-// Database connection
-$host = 'localhost';        // Update with your DB host
-$user = 'providence';     // Update with your DB user
-$password = 'bb1wy'; // Update with your DB password
-$database = 'Providence'; // Update with your DB name
-
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 
 // Check connection
 if ($conn->connect_error) {

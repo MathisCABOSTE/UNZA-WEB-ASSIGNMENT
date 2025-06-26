@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 session_start();
 
 // Accès réservé aux administrateurs
@@ -7,12 +9,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
-$host = 'localhost';
-$user = 'providence';
-$password = 'bb1wy';
-$database = 'Providence';
-
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 if ($conn->connect_error) {
     die("Database connection failed.");
 }

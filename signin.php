@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+require_once 'config.php';
 
 // Start session to store messages
 session_start();
 
-// Database connection parameters
-$host = 'localhost';
-$user = 'providence';
-$password = 'bb1wy';
-$dbname = 'Providence';
-
 // Connect to MySQL
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 
 // Check connection
 if ($conn->connect_error) {

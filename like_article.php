@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     echo json_encode([
@@ -6,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     ]);
     exit();
 }
-$mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
+$mysqli = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 
 $article_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 

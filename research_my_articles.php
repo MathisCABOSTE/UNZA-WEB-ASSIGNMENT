@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -14,7 +16,7 @@ if (isset($_SESSION['admin'])){
 }
 
 // Connect to the database
-$mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
+$mysqli = new mysqli($dbuser, $dbuser, $dbpassword, $database);
 if ($mysqli->connect_errno) {
     http_response_code(500);
     echo "Database connection failed.";

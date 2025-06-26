@@ -1,8 +1,5 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
+require_once 'config.php';
 
 session_start();
 
@@ -10,7 +7,7 @@ $is_admin = isset($_SESSION['admin']);
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 // Connect to the database
-$mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
+$mysqli = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 if ($mysqli->connect_errno) {
     http_response_code(500);
     echo "Database connection failed.";
