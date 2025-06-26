@@ -86,7 +86,7 @@ $conn->close();
             background-color: #333333;
             border-radius: 8px;
             padding: 12px 16px;
-            width: 320px;
+            width: 300px;
             font-size: 1.1rem;
             display: flex;
             justify-content: space-between;
@@ -95,7 +95,7 @@ $conn->close();
 
         .dropdown-menu {
             background-color: #404040;
-            width: 320px;
+            width: 300px;
         }
 
         .dropdown-item {

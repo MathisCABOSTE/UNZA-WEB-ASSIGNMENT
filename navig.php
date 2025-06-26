@@ -85,7 +85,7 @@ session_start();
                             <a class="dropdown-item" href="liked_articles.php">Liked Articles</a>
                             <a class="dropdown-item" href="account_settings.php">Settings</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="logout.php">Deconnection</a>
+                            <a class="dropdown-item text-danger" href="logout.php">Disconnect</a>
                         </div>
                     </div>
                 <?php else: ?>
