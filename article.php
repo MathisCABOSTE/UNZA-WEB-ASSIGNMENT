@@ -1,5 +1,32 @@
 <?php
 session_start();
+
+$is_admin = isset($_SESSION['admin']);
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_article'])) {
+    $delete_id = intval($_POST['article_id']);
+
+    // Vérifie que l'utilisateur est admin ou auteur
+    $check = $mysqli->prepare("SELECT author FROM articles WHERE article_id = ?");
+    $check->bind_param("i", $delete_id);
+    $check->execute();
+    $check->bind_result($article_author);
+    $check->fetch();
+    $check->close();
+
+    if ($is_admin || $user_id === $article_author) {
+        $delete = $mysqli->prepare("DELETE FROM articles WHERE article_id = ?");
+        $delete->bind_param("i", $delete_id);
+        if ($delete->execute()) {
+            $delete->close();
+            header("Location: index.php");
+            exit();
+        }
+    }
+}
+
+
 // Connect to the database
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
 if ($mysqli->connect_errno) {
@@ -29,6 +56,7 @@ if ($stmt->num_rows === 0) {
 }
 
 $stmt->bind_result($title, $author, $datetime, $content);
+$can_delete = $is_admin || ($user_id === $author);
 $stmt->fetch();
 
 // Check if user is logged in
@@ -105,6 +133,14 @@ if ($user_id) {
             color: #66b2ff;
             text-decoration: none;
         }
+
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* margin-bottom: 1.5rem; */
+        }
+
         .heart {
             font-size: 1.5rem;
             color: #ff4d6d;
@@ -140,6 +176,7 @@ if ($user_id) {
     </style>
 </head>
 <body>
+    <a href="javascript:history.back()" class="back-link">⬅ Back</a>
     <div class="article-box">
         <div class="article-title"><?php echo htmlspecialchars($title); ?></div>
         <div class="article-meta">
@@ -148,24 +185,31 @@ if ($user_id) {
         <div class="article-content">
             <?php echo nl2br(htmlspecialchars($content)); ?>
         </div>
-        <div class="like-card">
-            <button id="like-card-btn" style="background:none;border:none;padding:0;outline:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;">
-                <span class="heart<?php echo $liked ? ' liked' : ''; ?>">
-                    <?php echo $liked ? '♥' : '♡'; ?>
-                </span>
-                <span id="like-count" style="color:#fff;"><?php
-                    // Get like count
-                    $like_stmt = $mysqli->prepare("SELECT likes FROM articles WHERE article_id = ?");
-                    $like_stmt->bind_param("i", $article_id);
-                    $like_stmt->execute();
-                    $like_stmt->bind_result($likes);
-                    $like_stmt->fetch();
-                    echo $likes;
-                    $like_stmt->close();
-                ?></span> <span style="color:#fff;">Likes</span>
-            </button>
+        <div class="actions-row">
+            <div class="like-card">
+                <button id="like-card-btn" style="background:none;border:none;padding:0;outline:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;">
+                    <span class="heart<?php echo $liked ? ' liked' : ''; ?>">
+                        <?php echo $liked ? '♥' : '♡'; ?>
+                    </span>
+                    <span id="like-count" style="color:#fff;"><?php
+                        // Get like count
+                        $like_stmt = $mysqli->prepare("SELECT likes FROM articles WHERE article_id = ?");
+                        $like_stmt->bind_param("i", $article_id);
+                        $like_stmt->execute();
+                        $like_stmt->bind_result($likes);
+                        $like_stmt->fetch();
+                        echo $likes;
+                        $like_stmt->close();
+                    ?></span> <span style="color:#fff;">Likes</span>
+                </button>
+            </div>
+            <?php if ($can_delete): ?>
+            <form method="POST" style="margin-left: auto;">
+                <input type="hidden" name="article_id" value="<?php echo $article_id; ?>">
+                <button type="submit" name="delete_article" class="btn btn-dark" onclick="return confirm('Confirm delete?');">Delete Article</button>
+            </form>
+            <?php endif; ?>
         </div>
-        <a href="javascript:history.back()" class="back-link">← Back</a>
         <script>
         document.getElementById('like-card-btn').onclick = function() {
             fetch('like_article.php?id=<?php echo $article_id; ?>', {method: 'POST'})
