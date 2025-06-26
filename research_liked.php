@@ -7,6 +7,12 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+if (isset($_SESSION['admin'])){
+    if (isset($_GET['id'])) {
+        $user_id = $_GET['id'];
+    }
+}
+
 // Connect to the database
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
 if ($mysqli->connect_errno) {
@@ -15,7 +21,7 @@ if ($mysqli->connect_errno) {
     exit();
 }
 
-// Optional: search within liked articles
+// Search within liked articles
 $search = isset($_GET['si']) ? trim($_GET['si']) : '';
 $query = "SELECT a.article_id, a.title, a.author, a.content, a.likes, a.datetime
           FROM articles a
@@ -40,13 +46,22 @@ $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows === 0) {
-    echo "No liked articles.";
+    if ((isset($_SESSION['admin'])) && (isset($_GET['id']))) {
+        echo "@$user_id has no liked articles.";
+    } else {
+        echo "No liked articles.";
+    }
     $stmt->close();
     $mysqli->close();
     exit();
 }
 
-echo "You have {$stmt->num_rows} liked articles.<br><br>";
+if (isset($_SESSION['admin'])){
+    echo "@$user_id has {$stmt->num_rows} liked articles.<br><br>";
+} else {
+    echo "You have {$stmt->num_rows} liked articles.<br><br>";
+}
+
 
 $stmt->bind_result($article_id, $title, $author, $content, $likes, $datetime);
 

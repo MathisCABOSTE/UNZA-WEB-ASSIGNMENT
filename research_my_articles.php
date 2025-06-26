@@ -7,6 +7,12 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+if (isset($_SESSION['admin'])){
+    if (isset($_GET['id'])) {
+        $user_id = $_GET['id'];    
+    }
+}
+
 // Connect to the database
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
 if ($mysqli->connect_errno) {
@@ -29,13 +35,21 @@ $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows === 0) {
-    echo "You wrote no articles.";
+    if ((isset($_SESSION['admin'])) && (isset($_GET['id']))) {
+        echo "@$user_id wrote no articles.";
+    } else {
+        echo "You wrote no articles.";
+    }
     $stmt->close();
     $mysqli->close();
     exit();
 }
 
-echo "You wrote {$stmt->num_rows} articles.<br><br>";
+if (isset($_SESSION['admin'])){
+    echo "@$user_id wrote {$stmt->num_rows} articles.<br><br>";
+} else {
+    echo "You wrote {$stmt->num_rows} articles.<br><br>";
+}
 
 $stmt->bind_result($article_id, $title, $author, $content, $likes, $datetime);
 

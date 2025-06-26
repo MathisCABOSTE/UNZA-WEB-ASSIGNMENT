@@ -3,6 +3,11 @@
 
 <?php
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit();
+}
 ?>
 <html>
 
@@ -20,6 +25,13 @@ session_start();
         // Récupère le paramètre "si", l'envoie dans research.php et affiche le résultat dans para
         var url = new URL(window.location.href);
         var input = "<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>"; // Utilise l'ID de l'utilisateur connecté
+        var admin = "<?php echo isset($_SESSION['admin']) ? $_SESSION['admin'] : ''; ?>"; // Utilise l'ID de l'utilisateur connecté
+
+        if (admin){
+            if(url.searchParams.get("user")){
+                input = url.searchParams.get("user")
+            }
+        }
         var urltofetch = "research_my_articles.php?id=" + input;
         fetch(urltofetch)
             .then(function(response) {
