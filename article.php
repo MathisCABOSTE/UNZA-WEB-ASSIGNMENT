@@ -1,31 +1,13 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+
 session_start();
 
 $is_admin = isset($_SESSION['admin']);
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_article'])) {
-    $delete_id = intval($_POST['article_id']);
-
-    // Vérifie que l'utilisateur est admin ou auteur
-    $check = $mysqli->prepare("SELECT author FROM articles WHERE article_id = ?");
-    $check->bind_param("i", $delete_id);
-    $check->execute();
-    $check->bind_result($article_author);
-    $check->fetch();
-    $check->close();
-
-    if ($is_admin || $user_id === $article_author) {
-        $delete = $mysqli->prepare("DELETE FROM articles WHERE article_id = ?");
-        $delete->bind_param("i", $delete_id);
-        if ($delete->execute()) {
-            $delete->close();
-            header("Location: index.php");
-            exit();
-        }
-    }
-}
-
 
 // Connect to the database
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
@@ -56,11 +38,33 @@ if ($stmt->num_rows === 0) {
 }
 
 $stmt->bind_result($title, $author, $datetime, $content);
-$can_delete = $is_admin || ($user_id === $author);
 $stmt->fetch();
 
+$can_delete = ($is_admin || ($user_id === $author));
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_article']) && $can_delete) {
+    $delete_id = intval($_POST['article_id']);
+
+    // Vérifie que l'utilisateur est admin ou auteur
+    $check = $mysqli->prepare("SELECT author FROM articles WHERE article_id = ?");
+    $check->bind_param("i", $delete_id);
+    $check->execute();
+    $check->bind_result($article_author);
+    $check->fetch();
+    $check->close();
+
+    if ($is_admin || $user_id === $article_author) {
+        $delete = $mysqli->prepare("DELETE FROM articles WHERE article_id = ?");
+        $delete->bind_param("i", $delete_id);
+        if ($delete->execute()) {
+            $delete->close();
+            header("Location: index.php");
+            exit();
+        }
+    }
+}
+
 // Check if user is logged in
-$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 $liked = false;
 if ($user_id) {
     $like_check_stmt = $mysqli->prepare("SELECT 1 FROM likes WHERE user_id = ? AND article_id = ?");
