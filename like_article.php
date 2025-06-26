@@ -1,6 +1,11 @@
 <?php
 session_start();
-
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode([
+    'login_required' => true
+    ]);
+    exit();
+}
 $mysqli = new mysqli("localhost", "providence", "bb1wy", "Providence");
 
 $article_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
