@@ -37,8 +37,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $user['password'])) {
                 // Login success
                 $_SESSION['user_id'] = $user['user_id'];
+
+                // Checks if user is admin
+                $stmt = $conn->prepare("SELECT user_id FROM admins WHERE user_id = ?");
+                if ($stmt) {
+                    $stmt->bind_param("s", $user_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($result->num_rows === 1) {
+                        $admin = $result->fetch_assoc();
+                        $_SESSION['admin'] = $admin['user_id'];
+                    }
                 header("Location: index.php"); // Redirect to dashboard
                 exit();
+                }
             } else {
                 // Incorrect password
                 $error =  "Invalid username or password.";
