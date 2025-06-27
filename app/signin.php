@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 require_once 'config.php';
 
@@ -40,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Hash the password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+            
             // Insert user into database
             $stmt = $conn->prepare("INSERT INTO users (user_id, password) VALUES (?, ?)");
             $stmt->bind_param("ss", $username, $hashed_password);
@@ -59,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">

@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-  header("Location: login.php");
-  exit();
-}
 ?>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -21,17 +16,10 @@ if (!isset($_SESSION['user_id'])) {
 
     <script>
 
-        // Récupère le paramètre "id", l'envoie dans research_liked.php et affiche le résultat dans para
+        // Récupère le paramètre "si", l'envoie dans research.php et affiche le résultat dans para
         var url = new URL(window.location.href);
-        var input = "<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>"; // Utilise l'ID de l'utilisateur connecté
-        var admin = "<?php echo isset($_SESSION['admin']) ? $_SESSION['admin'] : ''; ?>"; // Utilise l'ID de l'utilisateur connecté
-
-        if (admin){
-            if(url.searchParams.get("user")){
-                input = url.searchParams.get("user")
-            }
-        }
-        var urltofetch = "research_liked.php?id=" + input;
+        var input = url.searchParams.get("si");
+        var urltofetch = "research.php?si=" + input;
         fetch(urltofetch)
             .then(function(response) {
                 return response.text();
@@ -106,6 +94,10 @@ if (!isset($_SESSION['user_id'])) {
 
 
         </nav>
+    </div>
+
+    <div class="create-article-btn">
+        <a href="create_article.php" class="btn btn-primary">Create New Article</a>
     </div>
 
     <div class="lessites">

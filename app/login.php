@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 require_once 'config.php';
 
@@ -66,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Close connection
 $conn->close();
 ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Connexion - Providence</title>
