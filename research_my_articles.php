@@ -16,7 +16,7 @@ if (isset($_SESSION['admin'])){
 }
 
 // Connect to the database
-$mysqli = new mysqli($dbuser, $dbuser, $dbpassword, $database);
+$mysqli = new mysqli($dbhost, $dbuser, $dbpassword, $database);
 if ($mysqli->connect_errno) {
     http_response_code(500);
     echo "Database connection failed.";
