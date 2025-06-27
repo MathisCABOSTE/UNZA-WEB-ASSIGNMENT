@@ -35,6 +35,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel - Providence</title>
+    <link rel="icon" type="image/png" href="./content/icon_provid.png" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="genrstyle.css">
     <style>
