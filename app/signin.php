@@ -26,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Username can only contain letters, numbers, and underscores.";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords not matching.";
+    } elseif (strlen($username) > 15){ 
+        $error = "Username can only be 15 character long or shorter.";
     } else {
         // Check if username already exists
         $check = $conn->prepare("SELECT LOWER(user_id) FROM users WHERE user_id = LOWER(?)");
