@@ -29,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Verify password
             if (password_verify($password, $user['password'])) {
+                session_destroy();
+                session_start();
                 // Login success
                 $_SESSION['user_id'] = $user['user_id'];
 
